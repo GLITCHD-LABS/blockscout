@@ -2,12 +2,12 @@ defmodule BlockScoutWeb.Router do
   use BlockScoutWeb, :router
 
   alias BlockScoutWeb.Plug.{GraphQL, RateLimit}
-  alias BlockScoutWeb.{ApiRouter, WebRouter}
+  alias BlockScoutWeb.Routers.{ApiRouter, WebRouter}
 
   @max_query_string_length 5_000
 
   if Application.compile_env(:block_scout_web, :admin_panel_enabled) do
-    forward("/admin", BlockScoutWeb.AdminRouter)
+    forward("/admin", BlockScoutWeb.Routers.AdminRouter)
   end
 
   pipeline :browser do
@@ -93,6 +93,6 @@ defmodule BlockScoutWeb.Router do
   end
 
   if Application.compile_env(:block_scout_web, WebRouter)[:enabled] do
-    forward("/", BlockScoutWeb.WebRouter)
+    forward("/", BlockScoutWeb.Routers.WebRouter)
   end
 end

@@ -8,17 +8,20 @@ defmodule RPCTranslatorForwarder do
   defdelegate call(conn, opts), to: RPCTranslator
 end
 
-defmodule BlockScoutWeb.ApiRouter do
+defmodule BlockScoutWeb.Routers.ApiRouter do
   @moduledoc """
   Router for API
   """
   use BlockScoutWeb, :router
-  alias BlockScoutWeb.{AddressTransactionController, APIKeyV2Router, SmartContractsApiV2Router, UtilsApiV2Router}
+  alias BlockScoutWeb.AddressTransactionController
+  alias BlockScoutWeb.Routers.{APIKeyV2Router, SmartContractsApiV2Router, TokensApiV2Router, UtilsApiV2Router}
   alias BlockScoutWeb.Plug.{CheckAccountAPI, CheckApiV2, RateLimit}
 
   @max_query_string_length 5_000
 
   forward("/v2/smart-contracts", SmartContractsApiV2Router)
+  forward("/v2/tokens", TokensApiV2Router)
+
   forward("/v2/key", APIKeyV2Router)
   forward("/v2/utils", UtilsApiV2Router)
 
@@ -83,6 +86,23 @@ defmodule BlockScoutWeb.ApiRouter do
     plug(:accepts, ["json"])
     plug(CheckApiV2)
     plug(RateLimit)
+  end
+
+  pipeline :api_v2_no_forgery_protect do
+    plug(
+      Plug.Parsers,
+      parsers: [:urlencoded, :multipart, :json],
+      length: 20_000_000,
+      query_string_length: 5_000,
+      pass: ["*/*"],
+      json_decoder: Poison
+    )
+
+    plug(BlockScoutWeb.Plug.Logger, application: :api_v2)
+    plug(:accepts, ["json"])
+    plug(CheckApiV2)
+    plug(RateLimit)
+    plug(:fetch_session)
   end
 
   pipeline :api_v1_graphql do
@@ -238,24 +258,6 @@ defmodule BlockScoutWeb.ApiRouter do
       get("/:address_hash_param/withdrawals", V2.AddressController, :withdrawals)
       get("/:address_hash_param/nft", V2.AddressController, :nft_list)
       get("/:address_hash_param/nft/collections", V2.AddressController, :nft_collections)
-    end
-
-    scope "/tokens" do
-      if Application.compile_env(:explorer, Explorer.Chain.BridgedToken)[:enabled] do
-        get("/bridged", V2.TokenController, :bridged_tokens_list)
-      end
-
-      get("/", V2.TokenController, :tokens_list)
-      get("/:address_hash_param", V2.TokenController, :token)
-      get("/:address_hash_param/counters", V2.TokenController, :counters)
-      get("/:address_hash_param/transfers", V2.TokenController, :transfers)
-      get("/:address_hash_param/holders", V2.TokenController, :holders)
-      get("/:address_hash_param/holders/csv", V2.CSVExportController, :export_token_holders)
-      get("/:address_hash_param/instances", V2.TokenController, :instances)
-      get("/:address_hash_param/instances/:token_id", V2.TokenController, :instance)
-      get("/:address_hash_param/instances/:token_id/transfers", V2.TokenController, :transfers_by_instance)
-      get("/:address_hash_param/instances/:token_id/holders", V2.TokenController, :holders_by_instance)
-      get("/:address_hash_param/instances/:token_id/transfers-count", V2.TokenController, :transfers_count_by_instance)
     end
 
     scope "/main-page" do
