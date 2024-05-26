@@ -11,7 +11,7 @@ RUN corepack enable
 
 # nginx 1.25.3
 FROM nginx:1.25.3-bookworm as base
-COPY docker-compose/prox/default.conf.template /etc/nginx/nginx.conf
+COPY proxy/default.conf.template /etc/nginx/nginx.conf
 
 # Install Certbot by Pip
 RUN apt update && apt upgrade -y
@@ -24,6 +24,6 @@ RUN /opt/certbot/bin/pip install certbot certbot-nginx
 RUN ln -s /opt/certbot/bin/certbot /usr/bin/certbot
 
 EXPOSE 80 443 8080 8081
-COPY docker-compose/services/init.sh /init.sh
+COPY services/nginx/init.sh /init.sh
 RUN chmod +x /init.sh
 ENTRYPOINT ["/init.sh"]
