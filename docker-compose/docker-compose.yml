@@ -45,6 +45,7 @@ services:
         ETHEREUM_JSONRPC_TRACE_URL: https://testnet.glitchd.network/rpc/
         ETHEREUM_JSONRPC_WS_URL: ws://testnet.glitchd.network/rpc/
         CHAIN_ID: '99'
+        API_V2_ENABLED: 'true'
 
   visualizer:
     extends:
