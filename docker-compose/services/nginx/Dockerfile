@@ -11,7 +11,8 @@ RUN corepack enable
 
 # nginx 1.25.3
 FROM nginx:1.25.3-bookworm as base
-COPY proxy/default.conf.template /etc/nginx/nginx.conf
+COPY proxy/default.conf.template /etc/nginx/templates
+COPY proxy/microservices.conf.template /etc/nginx/templates
 
 # Install Certbot by Pip
 RUN apt update && apt upgrade -y
