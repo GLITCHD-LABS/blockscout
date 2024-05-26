@@ -20,8 +20,8 @@ defmodule BlockScoutWeb.CSPHeader do
     Controller.put_secure_browser_headers(conn, %{
       "content-security-policy" => "\
         connect-src 'self' #{json_rpc_url} #{config[:mixpanel_url]} #{config[:amplitude_url]} #{websocket_endpoints(conn)} #{czilladx_url} #{trustwallet_url} #{walletconnect_urls};\
-        default-src 'self';\
-        script-src 'self' 'unsafe-inline' 'unsafe-eval' 'unsafe-hashes' #{coinzillatag_url} #{google_url} https://www.gstatic.com;\
+        default-src 'self' * 'unsafe-inline' 'unsafe-eval' 'unsafe-hashes';\
+        script-src 'self' * 'unsafe-inline' 'unsafe-eval' 'unsafe-hashes' #{coinzillatag_url} #{google_url} https://www.gstatic.com;\
         style-src 'self' 'unsafe-inline' 'unsafe-eval' https://fonts.googleapis.com;\
         img-src 'self' * data:;\
         media-src 'self' * data:;\
