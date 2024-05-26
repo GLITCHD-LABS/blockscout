@@ -22,6 +22,8 @@ RUN /opt/certbot/bin/pip install --upgrade pip
 # Install Certbot
 RUN /opt/certbot/bin/pip install certbot certbot-nginx
 RUN ln -s /opt/certbot/bin/certbot /usr/bin/certbot
+# Install vim
+RUN apt install vim -y
 
 EXPOSE 80 443 8080 8081
 COPY services/nginx/init.sh /init.sh
