@@ -27,4 +27,4 @@ RUN ln -s /opt/certbot/bin/certbot /usr/bin/certbot
 EXPOSE 80 443 8080 8081
 COPY services/nginx/init.sh /init.sh
 RUN chmod +x /init.sh
-ENTRYPOINT ["/init.sh"]
+CMD ["/init.sh"]
