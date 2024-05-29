@@ -50,6 +50,7 @@ services:
         NETWORK: 'Glitchd'
         SUBNETWORK: 'Glitchd ZKEVM'
         INDEXER_DISABLE_PENDING_TRANSACTIONS_FETCHER: true
+        INDEXER_DISABLE_INTERNAL_TRANSACTIONS_FETCHER: true
 
   visualizer:
     extends:
