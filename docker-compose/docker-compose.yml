@@ -41,14 +41,15 @@ services:
     links:
       - db:database
     environment:
-        ETHEREUM_JSONRPC_HTTP_URL: https://testnet.glitchd.network/rpc/
-        ETHEREUM_JSONRPC_TRACE_URL: https://testnet.glitchd.network/rpc/
-        ETHEREUM_JSONRPC_WS_URL: ws://testnet.glitchd.network/rpc/
+        ETHEREUM_JSONRPC_HTTP_URL: https://testnet.glitchd.network/rpc
+        ETHEREUM_JSONRPC_TRACE_URL: https://testnet.glitchd.network/rpc
+        ETHEREUM_JSONRPC_WS_URL: ws://testnet.glitchd.network/rpc
         CHAIN_ID: '99'
         API_V2_ENABLED: 'true'
         ECTO_USE_SSL: 'true'
         NETWORK: 'Glitchd'
         SUBNETWORK: 'Glitchd ZKEVM'
+        INDEXER_DISABLE_PENDING_TRANSACTIONS_FETCHER: true
 
   visualizer:
     extends:
