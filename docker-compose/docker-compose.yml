@@ -46,7 +46,7 @@ services:
         ETHEREUM_JSONRPC_WS_URL: ws://testnet.glitchd.network/rpc
         CHAIN_ID: '99'
         API_V2_ENABLED: 'true'
-        ECTO_USE_SSL: 'true'
+        ECTO_USE_SSL: false
         NETWORK: 'Glitchd'
         SUBNETWORK: 'Glitchd ZKEVM'
         INDEXER_DISABLE_PENDING_TRANSACTIONS_FETCHER: true
