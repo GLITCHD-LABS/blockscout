@@ -13,7 +13,6 @@ services:
 
   db:
     image: postgres:15
-    user: 2000:2000
     shm_size: 256m
     restart: always
     container_name: 'db'
