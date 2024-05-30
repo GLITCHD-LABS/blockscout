@@ -9,10 +9,11 @@ services:
       - sh
       - -c
       - |
-        chown -R 2000:2000 /var/lib/postgresql/data
+        chown -R postgres:postgres /var/lib/postgresql/data
 
   db:
     image: postgres:15
+    user: postgres
     shm_size: 256m
     restart: always
     container_name: 'db'
