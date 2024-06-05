@@ -13,6 +13,7 @@ services:
 
   stats-db:
     image: postgres:15
+    user: 2000:2000
     shm_size: 256m
     restart: always
     container_name: 'stats-db'
@@ -39,6 +40,9 @@ services:
     platform: linux/amd64
     restart: always
     container_name: 'stats'
+    links:
+      - db
+      - stats-db
     extra_hosts:
       - 'host.docker.internal:host-gateway'
     env_file:

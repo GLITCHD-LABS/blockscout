@@ -39,11 +39,13 @@ services:
         ADMIN_PANEL_ENABLED: ""
         RELEASE_VERSION: 6.6.0
     links:
-      - db:database
+      - db
     environment:
-        ETHEREUM_JSONRPC_HTTP_URL: https://testnet.glitchd.network/rpc
-        ETHEREUM_JSONRPC_TRACE_URL: https://testnet.glitchd.network/rpc
-        ETHEREUM_JSONRPC_WS_URL: ws://testnet.glitchd.network/rpc
+        ETHEREUM_JSONRPC_HTTP_URL: https://testnet.glitchd.network/rpc/l2
+        ETHEREUM_JSONRPC_TRACE_URL: https://testnet.glitchd.network/rpc/l2
+        # ETHEREUM_JSONRPC_WS_URL: ws://testnet.glitchd.network/rpc
+        ETHEREUM_JSONRPC_VARIANT: 'geth'
+        BLOCK_TRANSFORMER: 'clique'
         CHAIN_ID: '99'
         API_V2_ENABLED: 'true'
         ECTO_USE_SSL: false
