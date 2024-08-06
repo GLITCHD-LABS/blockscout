@@ -33,7 +33,7 @@ server {
 }
 
 server {
-    listen       8080;
+    listen       8080 ssl;
     server_name  explorer.glitchd.network;
     proxy_http_version 1.1;
     proxy_hide_header Access-Control-Allow-Origin;
@@ -53,6 +53,11 @@ server {
         proxy_set_header      Connection $connection_upgrade;
         proxy_cache_bypass    $http_upgrade;
     }
+
+    ssl_certificate /etc/letsencrypt/live/explorer.glitchd.network/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/explorer.glitchd.network/privkey.pem;
+    inclue /etc/letsencrypt/options-ssl-nginx.conf;
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
 }
 
 server {
